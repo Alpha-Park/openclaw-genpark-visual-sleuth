@@ -1,0 +1,15 @@
+{
+  "name": "openclaw-genpark-visual-sleuth",
+  "version": "1.0.0",
+  "description": "OpenClaw GenPark visual evidence chain and spatial bounding consistency auditor for synthetic artifact detection.",
+  "tools": [
+    {
+      "name": "audit_spatial_consistency",
+      "description": "Detect physically impossible 3D bounding box interpenetrations."
+    },
+    {
+      "name": "audit_light_sources",
+      "description": "Verify directional shadow consistency across detected visual elements."
+    }
+  ]
+}
