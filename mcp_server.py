@@ -14,6 +14,25 @@ def run_tool(name, args):
     else:
         raise ValueError(f"Unknown tool: {name}")
 
+from typing import Any, Dict, List, Optional
+
+try:
+    from mcp.server.fastmcp import FastMCP
+except ImportError as exc:
+    raise SystemExit("MCP requires the mcp package. Run: python -m pip install -r requirements.txt") from exc
+
+mcp = FastMCP('openclaw-genpark-visual-sleuth')
+
+@mcp.tool()
+def audit_spatial_consistency(object_detections: Optional[List[Dict[str, Any]]] = None) -> str:
+    """Audit spatial consistency in supplied object detections."""
+    return json.dumps(run_tool('audit_spatial_consistency', {'object_detections': object_detections if object_detections is not None else []}))
+
+@mcp.tool()
+def audit_light_sources(shadow_vectors: Optional[List[List[float]]] = None) -> str:
+    """Audit the consistency of supplied shadow vectors."""
+    return json.dumps(run_tool('audit_light_sources', {'shadow_vectors': shadow_vectors if shadow_vectors is not None else []}))
+
 def main():
     if "--test" in sys.argv:
         print("[TEST] Running OpenClaw Visual Sleuth Self-Test...")
@@ -26,15 +45,7 @@ def main():
         print("[TEST] All tests passed successfully!")
         return
 
-    for line in sys.stdin:
-        if not line.strip(): continue
-        try:
-            req = json.loads(line)
-            res = run_tool(req.get("name"), req.get("arguments", {}))
-            print(json.dumps({"jsonrpc": "2.0", "id": req.get("id"), "result": res}))
-        except Exception as e:
-            print(json.dumps({"jsonrpc": "2.0", "id": None, "error": {"code": -32603, "message": str(e)}}))
-        sys.stdout.flush()
+    mcp.run(transport="stdio")
 
 if __name__ == "__main__":
     main()

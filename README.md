@@ -1,13 +1,13 @@
 # openclaw-genpark-visual-sleuth
 
-[![Organization](https://img.shields.io/badge/AlphaPark-OpenSource-blue.svg)](https://github.com/alphaparkinc)
+[![Organization](https://img.shields.io/badge/AlphaPark-OpenSource-blue.svg)](https://github.com/Alpha-Park)
 [![Model Context Protocol](https://img.shields.io/badge/MCP-Standard-orange.svg)](https://modelcontextprotocol.io)
-[![Zero-Dependency](https://img.shields.io/badge/Dependencies-Zero_External-brightgreen.svg)](#)
-[![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](#)
+[![MCP SDK](https://img.shields.io/badge/MCP-SDK_Required-blue.svg)](requirements.txt)
+[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#)
 [![Security Rating](https://img.shields.io/badge/Status-Grade_A_Production-success.svg)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Production-hardened OpenClaw GenPark Agent skill engineered strictly with Python standard library. Provides high-throughput deterministic execution, cryptographic security, and game-theoretic optimization via the Model Context Protocol (MCP).
+Production-hardened OpenClaw GenPark Agent skill with a standard-library client and an MCP SDK server. Provides high-throughput deterministic execution, cryptographic security, and game-theoretic optimization via the Model Context Protocol (MCP).
 
 ---
 
@@ -30,9 +30,19 @@ python example_usage.py
 ```
 
 ### 2. Standalone MCP Server Launch
+
+The core Python client uses only the standard library. Running the MCP server requires **Python 3.10+** and the official **`mcp>=1.0.0,<2` SDK**. From the repository directory:
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+On Windows, use `.venv\Scripts\python.exe` instead. Configure the MCP client to use this environment's Python executable. The server runs locally over stdio; the GitHub repository URL is not a remote MCP endpoint.
+
 Run the native STDIO MCP server:
 ```bash
-python mcp_server.py
+.venv/bin/python mcp_server.py
 ```
 
 ---
